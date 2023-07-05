@@ -1,3 +1,33 @@
+# Terraform AWS ELB Module
+
+Terraform module to create an AWS ELB.
+
+## How to use this module
+
+```bash
+module "elb" {
+  source = "git::https://github.com/JManzur/terraform-aws-elb.git?ref=vX.X.X"
+
+  # Required variables:
+  name_prefix             = "jm"
+  environment             = "dev"
+  name_suffix             = "poc"
+  vpc_id                  = var.vpc_id
+  vpc_cidr                = var.vpc_cidr
+  create_self_signed_cert = true
+  elb_settings = [{
+    name     = "internal"
+    internal = true
+    type     = "application"
+    subnets  = var.public_subnets_ids
+  }]
+  access_logs_bucket = {
+    enable_access_logs = false
+    create_new_bucket  = false
+  }
+}
+```
+
 ## Requirements
 
 No requirements.
